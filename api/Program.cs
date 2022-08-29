@@ -24,8 +24,8 @@ var app = builder.Build();
                 try
                 {
                 var context = serviceScope.ServiceProvider.GetRequiredService<StoreContext>();
-                // context.Database.EnsureCreated();
-                await context.Database.MigrateAsync();
+                context.Database.EnsureCreated();
+                //await context.Database.MigrateAsync();
                 await StoreContextSeed.SeedAsync(context, loggerFactory);                    
                 }
                 catch (Exception ex)
