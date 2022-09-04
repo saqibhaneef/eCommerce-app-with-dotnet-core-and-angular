@@ -1,7 +1,12 @@
+using System.Linq;
+using api.Errors;
 using api.Helpers;
+using api.Middleware;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +20,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddDbContext<StoreContext>(x=>x.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.Configure<ApiBehaviorOptions>(options=>{
+    options.InvalidModelStateResponseFactory=actioncontext=>
+    {
+        var errors=actioncontext.ModelState
+           .Where(e=>e.Value.Errors.Count>0)
+           .SelectMany(x=>x.Value.Errors)
+           .Select(x=>x.ErrorMessage).ToArray();
+           var errorResponse=new ApiValidationErrorResponse()
+           {
+            Errors=errors
+           };
+           return new BadRequestObjectResult(errorResponse);
+    };
+});
+// builder.Services.AddSwaggerGen(c=>{
+// c.SwaggerDoc("V1",new OpenApiInfo(){Title="API",Version="V1"});
+// });
 
 var app = builder.Build();
 
@@ -40,14 +61,15 @@ var app = builder.Build();
             }            
 
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
+// Configure the HTTP request pipeline.
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
 app.UseHttpsRedirection();
 
 app.UseRouting();
