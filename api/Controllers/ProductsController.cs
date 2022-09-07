@@ -7,6 +7,7 @@ using Core.Specifications;
 using Api.Dtos;
 using AutoMapper;
 using api.Errors;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -29,12 +30,16 @@ namespace api.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(string? sort,int? brandId,int? typeId)
+        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams productParams)
         {            
-            var spec=new ProductsWithBrandsAndTypesSpecification(sort,brandId,typeId); 
-            var products=await _productsRepo.ListAsync(spec);            
+            var spec=new ProductsWithBrandsAndTypesSpecification(productParams); 
+            var products=await _productsRepo.ListAsync(spec);
+
+            var countSpec=new ProductWithFiltersForCountSpecification(productParams);
+            var totalItems=await _productsRepo.CountAsync(spec);
+            var data= _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductToReturnDto>>(products);           
             
-            return Ok(_mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductToReturnDto>>(products));
+            return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex,productParams.PageSize,totalItems,data));
         }
         [HttpGet("{id}")]
         //To improve swagger documentation
