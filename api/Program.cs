@@ -19,11 +19,7 @@ builder.Services.AddApplicationServices();
 // c.SwaggerDoc("V1",new OpenApiInfo(){Title="API",Version="V1"});
 // });
 builder.Services.AddSwaggerDocumentation();
-builder.Services.AddCors(opt=>{
-    opt.AddPolicy("CorsPolicy",policy=>{
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
-    });
-});
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -59,7 +55,7 @@ app.UseStatusCodePagesWithReExecute("/errors/{0}");
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseStaticFiles();
-app.UseCors("CorsPolicy");
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
 app.UseAuthorization();
 app.MapControllers();
 

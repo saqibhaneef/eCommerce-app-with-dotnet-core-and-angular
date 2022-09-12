@@ -1,3 +1,12 @@
 Remove
 Skinet> dotnet ef migrations remove -p Infrastructure -s API 
 
+
+
+Extensions
+
+-DotNet/c#
+
+-Angular
+ Angular Language Service
+ Angular Snippets
