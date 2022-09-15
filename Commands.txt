@@ -7,6 +7,9 @@ Extensions
 
 -DotNet/c#
 
+-Vs Code
+ Git Graph
+
 -Angular
  Angular Language Service
  Angular Snippets
