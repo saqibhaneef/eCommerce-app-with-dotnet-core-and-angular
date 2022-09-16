@@ -4,10 +4,10 @@
     <div class="row">        
         <section class="col-3">
             <h5 class="text-warning ml-3">Filter</h5>
-            <select class="custom-select"> 
-                <option selected>Alphbatically</option>
-                <option>Price: Ascending</option>
-                <option>Price: Descending</option>
+            <select class="custom-select" (change)="onSortSelected($event)"> 
+                <option *ngFor="let item of sortOptions" [value]="item.value">
+                    {{item.name}}
+                </option>                
             </select>
 
             <h5 class="text-warning ml-3">Brands</h5>
