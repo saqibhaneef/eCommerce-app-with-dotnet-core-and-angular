@@ -14,7 +14,7 @@
             <ul class="list-group my-3">
                 <li class="list-group-item" 
                 *ngFor="let brand of brands"
-                [class.active]="brand.id===this.selectedBrandId"
+                [class.active]="brand.id===this.shopParams.brandId"
                 [value]="brand.id"
                 (click)="onBrandSelected(brand.id)"
                 >
@@ -25,8 +25,8 @@
             <ul class="list-group my-3">
                 <li class="list-group-item" 
                 *ngFor="let type of types"
-                [class.active]="type.id===this.selectedTypeId"
-                [value]="type.id===this.selectedTypeId"
+                [class.active]="type.id===this.shopParams.typeId"
+                [value]="type.id"
                 (click)="onTypeSelected(type.id)"
                 >
                     {{type.name}}
@@ -37,7 +37,15 @@
         <section class="col-9">
             <div class="d-flex justify-content-between align-items-center pb-2">
                 <header>
-                    <span>Showing <strong>10</strong> of <strong>13</strong> Results</span>
+                    <span *ngIf="totalCount && totalCount>0 ">Showing <strong>
+                        {{(shopParams.pageNumber-1)*shopParams.pageSize+1}} - 
+                        {{(shopParams.pageNumber)*shopParams.pageSize
+                            > totalCount ? totalCount : (shopParams.pageNumber)*shopParams.pageSize
+                        }}
+                    </strong> of <strong>{{totalCount}}</strong> Results</span>
+                    <span *ngIf="totalCount===0">
+                        There are <strong>0</strong> Results.
+                    </span>
                 </header>
                 <div class="form-inline mt-2">
                     <input class="form-control" style="width: 300px;" type="text">
@@ -51,6 +59,19 @@
                   <app-product-item [product]="item"></app-product-item>
                 </div>
             </div>
+            <div *ngIf="totalCount>0">
+                <pagination 
+                    [boundaryLinks]="true" 
+                    [totalItems]="totalCount"
+                    (pageChanged)="onPageChanged($event)"
+                    [itemsPerPage]="this.shopParams.pageSize"
+                    previousText="&lsaquo;" 
+                    nextText="&rsaquo;" 
+                    firstText="&laquo;" 
+                    lastText="&raquo;">
+                </pagination>
+            </div>
+            
         </section>
     </div>
 </div>
