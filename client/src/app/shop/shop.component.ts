@@ -82,6 +82,7 @@ onSortSelected(event)
 
 onPageChanged(event:any)
 {
+  debugger
   this.shopParams.pageNumber=event.page
   this.getProducts()
 }
