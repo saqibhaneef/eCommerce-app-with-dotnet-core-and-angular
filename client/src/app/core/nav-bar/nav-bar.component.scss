@@ -10,3 +10,18 @@
     top: -12px;
     right: 32px;
 }
+
+a{
+    text-decoration: none;
+    &.active{
+        color: yellow; 
+        background-color: cadetblue;       
+    }
+}
+
+.logo{
+    cursor: pointer;
+    &.logo{
+        outline: none;
+    }
+}
