@@ -45,7 +45,6 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().Create
 
 
 // Configure the HTTP request pipeline.
-
 app.UseMiddleware<ExceptionMiddleware>();
 
 //Extension method

@@ -2,10 +2,10 @@ namespace api.Errors
 {
     public class ApiResponse
     {
-        public ApiResponse(int StatusCode, string message=null)
+        public ApiResponse(int statusCode, string message=null)
         {
-            StatusCode=StatusCode;
-            message=message ?? GetDefaultMessageForStatusCode(StatusCode);
+            StatusCode=statusCode;
+            Message=message ?? GetDefaultMessageForStatusCode(StatusCode);
         }
 
         public int StatusCode { get; set; }

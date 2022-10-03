@@ -4,6 +4,7 @@ namespace api.Errors
     {
         public ApiException(int StatusCode, string message = null,string details=null) : base(StatusCode, message)
         {
+            Details = details;
         }
 
         public string Details { get; set; }
