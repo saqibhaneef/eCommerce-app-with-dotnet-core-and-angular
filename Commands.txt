@@ -13,3 +13,17 @@ Extensions
 -Angular
  Angular Language Service
  Angular Snippets
+
+-Packages
+ npm install ngx-toastr
+
+
+ To Test Redis
+ https://community.chocolatey.org/packages/another-redis-desktop-manager#install
+
+
+ Changes into file
+ git diff --cached > name.patch
+
+ Apply files changes to Code
+ git apply --reject --whitespace=fix name.patch

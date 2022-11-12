@@ -1,0 +1,11 @@
+using Core.Entities;
+
+namespace Core.Interfaces
+{
+    public interface IBasketRepository
+    {
+         Task<CustomerBasket> GetBasketAsync(string basketId);
+         Task<CustomerBasket> UpdateBasketAsync(CustomerBasket customerBasket);
+         Task<bool> DeleteBasket(string basketId);
+    }
+}
