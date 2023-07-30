@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+
 
 builder.Services.AddDbContext<AppIdentityDbContext>(x =>
 {
