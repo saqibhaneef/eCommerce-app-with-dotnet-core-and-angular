@@ -11,7 +11,13 @@
             <i class="fa fa-shopping-cart mr-5 fa-2x"></i> 
             <div *ngIf="( basket$ | async) as basket" class="cart-no">{{basket.basketItems.length}}</div>           
         </a>
-        <a class="btn btn-outline-primary" href="#">Login</a>
-        <a class="btn btn-outline-primary" href="#">Sign up</a>
+        <ng-container *ngIf="(this.currentUser$ | async)===null">
+            <a routerLink="/account/login" class="btn btn-outline-primary" href="#">Login</a>
+            <a routerLink="/account/register" class="btn btn-outline-primary" href="#">Sign up</a>
+        </ng-container>
+        <ng-container *ngIf="this.currentUser$ | async as user">
+            <p>Welcome {{user.displayName}}</p>
+        </ng-container>
+
     </div>
 </div>
