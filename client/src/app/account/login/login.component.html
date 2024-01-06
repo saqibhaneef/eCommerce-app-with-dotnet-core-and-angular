@@ -5,16 +5,29 @@
           <h1 class="h3 mb-3 font-weight-normal">Login</h1>
         </div>
 
-        <div class="form-floating mb-3">
+        <!-- Commented to replace with reussable textbox -->
+        <!-- <div class="form-floating mb-3">
             <label for="floatingInput">Email</label>
-            <input type="email" formControlName="email" class="form-control" id="floatingInput" placeholder="Email">        
-            <div class="form-floating">                
-                <label for="floatingPassword">Password</label>
-                <input type="password" formControlName="password" id="floatingPassword" class="form-control" placeholder="Password">
-            </div>
-        </div>
+            <input
+            [class.is-valid]="loginForm.get('email')?.touched && loginForm.get('email')?.valid" 
+            [class.is-invalid]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" 
+            type="email" formControlName="email" class="form-control is-invalid" id="floatingInput" placeholder="Email">     
+            
+            <div *ngIf="this.loginForm.get('error')?.errors?.['required']" class="invalid-feedback">Please choose a email</div>
+            <div *ngIf="this.loginForm.get('error')?.errors?.['email']" class="invalid-feedback">Invalid Email</div>   
+            
+        </div> 
+        <div class="form-floating">                
+            <label for="floatingPassword">Password</label>
+            <input type="password" formControlName="password" id="floatingPassword" class="form-control" placeholder="Password">                
+        </div>-->
+        
+        <app-text-input [formControl]="loginForm.controls['email']" [label]="'Email Address'"> </app-text-input>
+        <app-text-input [formControl]="loginForm.controls['password']" [label]="'Password'" [type]="'password'"></app-text-input>
 
-        <button  class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <div class="d-grid">
+            <button [disabled]="loginForm.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </div>
     </form>
-    </div>
+    </div>    
   </div>
